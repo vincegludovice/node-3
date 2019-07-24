@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: node3db
+    ports:
+      - 5432:5432
+    volumes:
+      - node3db:/var/lib/postgresql/data
+volumes:
+  node3db:
