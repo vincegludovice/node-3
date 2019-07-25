@@ -377,7 +377,7 @@ We're going to use the same entities that we used in the previous project.
       postId: {
         type: 'integer',
         notNull: true,
-        references: '"users"',
+        references: '"posts"',
       },
       comment: {
         type: 'text',
