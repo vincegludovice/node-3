@@ -92,7 +92,7 @@ starting this project.
       program. You'll see an address bar at the top of the window in that bar
       type in the following address.
 
-      `postgres://postgres@localhost:5432/postgres`o
+      `postgres://postgres@localhost:5432/postgres`
 
       There are a few aspects of this URL we should discuss first.
 
@@ -129,7 +129,7 @@ starting this project.
           postgres://postgres@localhost:5432/node3
 
     - Connect using SQL Tabs (the password will be the same)
-    - We now a database specifically for our application.
+    - We now have a database specifically for our application.
 
 ## Step 2 - Adding Tables
 
