@@ -64,17 +64,6 @@ function getProfile(req, res) {
       res.status(500).end();
     });
 }
-function auth(req, res) {
-  if (!req.headers.authorization) return res.status(401).end();
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, secret);
-    res.status(200).json({ data: "Here is the protected data" });
-  } catch (err) {
-    console.error(err);
-    res.status(401).end();
-  }
-}
 function loginList(req, res) {
   if (!req.headers.authorization) return res.status(401).end();
   const db = req.app.get("db");
@@ -123,7 +112,6 @@ module.exports = {
   list,
   getById,
   getProfile,
-  auth,
   login,
   loginList
 };

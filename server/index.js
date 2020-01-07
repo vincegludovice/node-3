@@ -5,6 +5,9 @@ const users = require("./controllers/users.js");
 const posts = require("./controllers/posts.js");
 const comments = require("./controllers/comments.js");
 
+const jwt = require("jsonwebtoken");
+const secret = require("../secret");
+
 massive({
   host: "localhost",
   port: 5432,
@@ -18,6 +21,20 @@ massive({
     app.set("db", db);
 
     app.use(express.json());
+
+    const auth = (req, res, next) => {
+      if (!req.headers.authorization) {
+        return res.status(401).end();
+      }
+      try {
+        const token = req.headers.authorization.split(" ")[1];
+        jwt.verify(token, secret);
+        next();
+      } catch (err) {
+        console.error(err);
+        res.status(401).end();
+      }
+    };
 
     //Create
     app.post("/api/users", users.create);
@@ -41,9 +58,8 @@ massive({
     app.patch("/api/comments/:commentId", comments.updateComment);
 
     //Node-4 Part 3
-    app.post("/api/login", users.login);
+    app.post("/api/login", auth, users.login);
     app.get("/api/loginList", users.loginList);
-    app.get("/api/protected/data", users.auth);
 
     const PORT = 3001;
     app.listen(PORT, () => {
