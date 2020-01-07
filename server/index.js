@@ -38,28 +38,28 @@ massive({
 
     //Create
     app.post("/api/users", users.create);
-    app.post("/api/posts/:userId", posts.create);
-    app.post("/api/comments/:userId/:postId", comments.create);
+    app.post("/api/posts/:userId", auth, posts.create);
+    app.post("/api/comments/:userId/:postId", auth, comments.create);
 
     //Get all
-    app.get("/api/users", users.list);
-    app.get("/api/posts", posts.allPosts);
+    app.get("/api/users", auth, users.list);
+    app.get("/api/posts", auth, posts.allPosts);
 
     //Get One
-    app.get("/api/users/:id", users.getById);
-    app.get("/api/users/:id/profile", users.getProfile);
-    app.get("/api/posts/:id/comments", posts.viewPostByPostId);
+    app.get("/api/users/:id", auth, users.getById);
+    app.get("/api/users/:id/profile", auth, users.getProfile);
+    app.get("/api/posts/:id/comments", auth, posts.viewPostByPostId);
 
     //get all posts of specific user
-    app.get("/api/users/:userId/posts", posts.viewPostsByUserId);
+    app.get("/api/users/:userId/posts", auth, posts.viewPostsByUserId);
 
     //Patch
-    app.patch("/api/posts/:postId", posts.updatePost);
-    app.patch("/api/comments/:commentId", comments.updateComment);
+    app.patch("/api/posts/:postId", auth, posts.updatePost);
+    app.patch("/api/comments/:commentId", auth, comments.updateComment);
 
     //Node-4 Part 3
     app.post("/api/login", auth, users.login);
-    app.get("/api/loginList", users.loginList);
+    app.get("/api/loginList", auth, users.loginList);
 
     const PORT = 3001;
     app.listen(PORT, () => {
