@@ -14,26 +14,22 @@ function create(req, res) {
 }
 function viewPostByPostId(req, res) {
   const db = req.app.get("db");
-  const { comments } = req.query;
-  const { postId } = req.params;
-  let result = [];
+  const { id } = req.params;
   db.posts
-    .findOne({ id: postId })
-    .then(post => post)
-    .catch(err => {
-      console.error(err);
-      res.status(500).end();
-    })
-    .then(post => {
-      result.push(post);
-      if (comments) {
-        db.comments.find({ postId }).then(postComments => {
-          result.push(postComments);
-          res.status(200).json(result);
-        });
-      } else {
-        res.status(200).json(post);
-      }
+    .findOne(id)
+    .then(results => {
+      let content = results;
+      req.query.postId
+        ? db.comments
+            .find({ postId: req.query.postId })
+            .then(results => {
+              res.status(200).send({ post: content, comments: results });
+            })
+            .catch(err => {
+              console.error(err);
+              res.status(500).end;
+            })
+        : res.status(200).send(results);
     })
     .catch(err => {
       console.error(err);
