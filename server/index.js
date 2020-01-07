@@ -40,6 +40,11 @@ massive({
     app.patch("/api/posts/:postId", posts.updatePost);
     app.patch("/api/comments/:commentId", comments.updateComment);
 
+    //Node-4 Part 3
+    app.post("/api/login", users.login);
+    app.get("/api/loginList", users.loginList);
+    app.get("/api/protected/data", users.auth);
+
     const PORT = 3001;
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
